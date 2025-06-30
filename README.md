@@ -5,11 +5,12 @@ This repository contains Terraform configuration to deploy [MeiliSearch](https:/
 ## 🏗️ Architecture
 
 The infrastructure includes:
-- **Compute Engine VM** (e2-micro) running Debian 11
-- **Static IP address** for consistent access
-- **Firewall rule** allowing traffic on port 7700
-- **Docker container** running MeiliSearch v1.7
-- **Persistent storage** for MeiliSearch data
+
+-   **Compute Engine VM** (e2-micro) running Debian 11
+-   **Static IP address** for consistent access
+-   **Firewall rule** allowing traffic on port 7700
+-   **Docker container** running MeiliSearch v1.7
+-   **Persistent storage** for MeiliSearch data
 
 ## 📋 Prerequisites
 
@@ -17,56 +18,61 @@ Before deploying, ensure you have:
 
 1. **Google Cloud Project** with billing enabled
 2. **Required APIs enabled**:
-   - Compute Engine API
-   - Cloud Resource Manager API
+    - Compute Engine API
+    - Cloud Resource Manager API
 3. **Local tools** (auto-installed by deploy script):
-   - [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
-   - [Terraform](https://www.terraform.io/downloads)
+    - [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
+    - [Terraform](https://www.terraform.io/downloads)
 
 ## 🚀 Quick Start
 
 ### Option 1: Automated Deployment
 
 1. **Clone the repository**:
-   ```bash
-   git clone <your-repo-url>
-   cd meilisearch-gcp-terraform
-   ```
+
+    ```bash
+    git clone https://github.com/yocoso/meilisearch-gcp-terraform
+    cd meilisearch-gcp-terraform
+    ```
 
 2. **Update configuration**:
    Edit `deploy-meilisearch.sh` and change the `PROJECT_ID`:
-   ```bash
-   PROJECT_ID="your-gcp-project-id"  # <-- CHANGE THIS
-   ```
+
+    ```bash
+    PROJECT_ID="your-gcp-project-id"  # <-- CHANGE THIS
+    ```
 
 3. **Run the deployment script**:
-   ```bash
-   chmod +x deploy-meilisearch.sh
-   ./deploy-meilisearch.sh
-   ```
+    ```bash
+    chmod +x deploy-meilisearch.sh
+    ./deploy-meilisearch.sh
+    ```
 
 ### Option 2: Manual Deployment
 
 1. **Authenticate with GCP**:
-   ```bash
-   gcloud auth application-default login
-   gcloud config set project YOUR_PROJECT_ID
-   ```
+
+    ```bash
+    gcloud auth application-default login
+    gcloud config set project YOUR_PROJECT_ID
+    ```
 
 2. **Initialize Terraform**:
-   ```bash
-   terraform init
-   ```
+
+    ```bash
+    terraform init
+    ```
 
 3. **Plan the deployment**:
-   ```bash
-   terraform plan -var="project_id=YOUR_PROJECT_ID"
-   ```
+
+    ```bash
+    terraform plan -var="project_id=YOUR_PROJECT_ID"
+    ```
 
 4. **Apply the configuration**:
-   ```bash
-   terraform apply -var="project_id=YOUR_PROJECT_ID"
-   ```
+    ```bash
+    terraform apply -var="project_id=YOUR_PROJECT_ID"
+    ```
 
 ## ⚙️ Configuration
 
@@ -74,18 +80,19 @@ Before deploying, ensure you have:
 
 You can customize the deployment by modifying `variables.tf` or passing variables:
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `project_id` | GCP Project ID | Required |
-| `region` | GCP Region | `us-central1` |
-| `zone` | GCP Zone | `us-central1-a` |
+| Variable     | Description    | Default         |
+| ------------ | -------------- | --------------- |
+| `project_id` | GCP Project ID | Required        |
+| `region`     | GCP Region     | `us-central1`   |
+| `zone`       | GCP Zone       | `us-central1-a` |
 
 ### MeiliSearch Configuration
 
 The MeiliSearch instance is configured with:
-- **Port**: 7700
-- **Master Key**: `mysecuremasterkey` (⚠️ **Change this in production!**)
-- **Data Path**: `/opt/meili_data` (persistent storage)
+
+-   **Port**: 7700
+-   **Master Key**: `mysecuremasterkey` (⚠️ **Change this in production!**)
+-   **Data Path**: `/opt/meili_data` (persistent storage)
 
 ## 🔒 Security Considerations
 
@@ -99,6 +106,7 @@ The MeiliSearch instance is configured with:
 ### Updating the Master Key
 
 Edit `startup.sh` and change the master key:
+
 ```bash
 # Change this line:
 meilisearch --db-path /meili_data --master-key YOUR_SECURE_MASTER_KEY
@@ -109,18 +117,20 @@ meilisearch --db-path /meili_data --master-key YOUR_SECURE_MASTER_KEY
 After deployment:
 
 1. **Get the public IP**:
-   ```bash
-   terraform output
-   ```
+
+    ```bash
+    terraform output
+    ```
 
 2. **Access MeiliSearch**:
-   - API: `http://YOUR_IP:7700`
-   - Health check: `http://YOUR_IP:7700/health`
+
+    - API: `http://YOUR_IP:7700`
+    - Health check: `http://YOUR_IP:7700/health`
 
 3. **Test the API**:
-   ```bash
-   curl -X GET 'http://YOUR_IP:7700/health'
-   ```
+    ```bash
+    curl -X GET 'http://YOUR_IP:7700/health'
+    ```
 
 ## 🗂️ Project Structure
 
@@ -147,23 +157,26 @@ terraform destroy -var="project_id=YOUR_PROJECT_ID"
 ### Common Issues
 
 1. **Permission denied errors**:
-   - Ensure you're authenticated: `gcloud auth list`
-   - Check project permissions: `gcloud projects get-iam-policy PROJECT_ID`
+
+    - Ensure you're authenticated: `gcloud auth list`
+    - Check project permissions: `gcloud projects get-iam-policy PROJECT_ID`
 
 2. **API not enabled errors**:
-   ```bash
-   gcloud services enable compute.googleapis.com
-   gcloud services enable cloudresourcemanager.googleapis.com
-   ```
+
+    ```bash
+    gcloud services enable compute.googleapis.com
+    gcloud services enable cloudresourcemanager.googleapis.com
+    ```
 
 3. **MeiliSearch not accessible**:
-   - Check firewall rules in GCP Console
-   - Verify the VM is running: `gcloud compute instances list`
-   - Check startup script logs: `gcloud compute instances get-serial-port-output meilisearch-vm`
+    - Check firewall rules in GCP Console
+    - Verify the VM is running: `gcloud compute instances list`
+    - Check startup script logs: `gcloud compute instances get-serial-port-output meilisearch-vm`
 
 ### Logs
 
 To check MeiliSearch logs:
+
 ```bash
 # SSH into the VM
 gcloud compute ssh meilisearch-vm --zone=us-central1-a
@@ -182,9 +195,9 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🔗 Resources
 
-- [MeiliSearch Documentation](https://docs.meilisearch.com/)
-- [Terraform GCP Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs)
-- [Google Cloud Documentation](https://cloud.google.com/docs)
+-   [MeiliSearch Documentation](https://docs.meilisearch.com/)
+-   [Terraform GCP Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs)
+-   [Google Cloud Documentation](https://cloud.google.com/docs)
 
 ---
 
