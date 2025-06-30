@@ -132,6 +132,39 @@ After deployment:
     curl -X GET 'http://YOUR_IP:7700/health'
     ```
 
+## 🎛️ Setting Up the Dashboard
+
+MeiliSearch doesn't include a built-in dashboard, but you can use community-built UI tools for easier management:
+
+### Mini Dashboard (Official)
+
+Use the official MeiliSearch mini-dashboard:
+
+1. **Clone the official mini dashboard**:
+
+    ```bash
+    git clone https://github.com/meilisearch/mini-dashboard.git
+    cd mini-dashboard
+    ```
+
+2. **Install dependencies**:
+
+    ```bash
+    yarn
+    ```
+
+3. **Build and serve**:
+
+    ```bash
+    REACT_APP_MEILI_SERVER_ADDRESS=http://YOUR_STATIC_IP:7700 yarn build
+    cd build
+    npx serve build
+    ```
+
+    Replace `YOUR_STATIC_IP` with the actual static IP from `terraform output`
+
+The dashboard will be served on a dynamically assigned port (typically `http://localhost:3000` or similar). Check the terminal output for the exact URL.
+
 ## 🗂️ Project Structure
 
 ```
