@@ -1,0 +1,67 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+terraform.rc
+.terraformrc
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Backup files
+*.backup
+*.bak
+
+# Temporary files
+*.tmp
+*.temp
+
+# GCP credentials (if accidentally placed in project)
+*.json
+!example.json
+credentials.json
+service-account-key.json
+
+# SSH keys
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# Node modules (if any JS tooling is added)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
