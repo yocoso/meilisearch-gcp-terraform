@@ -18,8 +18,8 @@ Before deploying, ensure you have:
 
 1. **Google Cloud Project** with billing enabled
 2. **Required APIs enabled**:
-    - Compute Engine API
-    - Cloud Resource Manager API
+    - [Compute Engine API](https://console.cloud.google.com/apis/library/compute.googleapis.com)
+    - [Cloud Resource Manager API](https://console.cloud.google.com/apis/library/cloudresourcemanager.googleapis.com)
 3. **Local tools** (auto-installed by deploy script):
     - [Google Cloud CLI](https://cloud.google.com/sdk/docs/install)
     - [Terraform](https://www.terraform.io/downloads)
@@ -36,10 +36,20 @@ Before deploying, ensure you have:
     ```
 
 2. **Update configuration**:
-   Edit `deploy-meilisearch.sh` and change the `PROJECT_ID`:
+
+    a. Edit `deploy-meilisearch.sh` and change the `PROJECT_ID`:
 
     ```bash
     PROJECT_ID="your-gcp-project-id"  # <-- CHANGE THIS
+    ```
+
+    b. Edit `variables.tf` and update the project_id variable:
+
+    ```hcl
+    variable "project_id" {
+      description = "your-gcp-project-id"  # <-- CHANGE THIS
+      type        = string
+    }
     ```
 
 3. **Run the deployment script**:

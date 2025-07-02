@@ -4,7 +4,7 @@ set -e
 set -o pipefail
 
 # === CONFIGURATION ===
-PROJECT_ID="mina-demo"         # <-- CHANGE THIS
+PROJECT_ID="YOUR_PROJECT_ID"         # <-- CHANGE THIS
 REGION="us-central1"
 ZONE="us-central1-a"
 TERRAFORM_DIR="."                    # Or path to your Terraform folder
