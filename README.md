@@ -167,7 +167,6 @@ Use the official MeiliSearch mini-dashboard:
 
     ```bash
     REACT_APP_MEILI_SERVER_ADDRESS=http://YOUR_STATIC_IP:7700 yarn build
-    cd build
     npx serve build
     ```
 
